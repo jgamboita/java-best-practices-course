@@ -1,5 +1,14 @@
  # [Introduccion Introducción]
-   # [introduccionAMaven Introducción a Maven]
+   # [introduccionAMaven Errores comunes]
+      # [ciclo Ciclo de vida de un proyecto java]
+      # [ciclo Concurrencia (Ej: Campos de un servlet)]
+      # [ciclo No reutilizar (Ej: Implementación del MVC desde 0)]
+      # [ciclo Dejar recursos abiertos]
+      # [ciclo Tratamiento incorrecto de excepciones
+      # [ciclo Reimplementar clases que ya están disponibles en el JDK (Calendar, Streams)
+      # [ciclo Utilizar Strings de grandes dimensiones en vez de Streams
+      # [ciclo Codificación de caracteres por defecto (sin ser consciente de ello)
+      # [ciclo Mala aplicación del MVC (Ej: JSP con lógica de negocio)
    # [ApplicationContext Introducción a Spring]
    # [entornoDesarrollo Instalación y Configuración del entorno de desarrollo]
  # [inicioProyecto Primeros pasos en el proyecto]
@@ -13,3 +22,8 @@
  # [continousIntegration Integración contínua]
  # [generatingSite Creación de la web de proyecto]
  # [standaloneArchetype Standalone Archetype]
+
+
+
+   
+      
