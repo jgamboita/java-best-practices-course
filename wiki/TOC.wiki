@@ -6,24 +6,34 @@
       # [ciclo Dejar recursos abiertos]
       # [ciclo Tratamiento incorrecto de excepciones
       # [ciclo Reimplementar clases que ya están disponibles en el JDK (Calendar, Streams)
-      # [ciclo Utilizar Strings de grandes dimensiones en vez de Streams
-      # [ciclo Codificación de caracteres por defecto (sin ser consciente de ello)
-      # [ciclo Mala aplicación del MVC (Ej: JSP con lógica de negocio)
-   # [ApplicationContext Introducción a Spring]
-   # [entornoDesarrollo Instalación y Configuración del entorno de desarrollo]
- # [inicioProyecto Primeros pasos en el proyecto]
- # [multimoduleProject Configuración del proyecto multimódulo]
-   # [dataModule Implementación módulo de datos]
-   # [dataAccessModule Implementación módulo de persistencia de datos]
-   # [servicesModule Implementación módulo de servicios]
-   # [webModule Implementación módulo de web]
-   # [clientModule Implementación módulo de cliente]
-   # [Testing Testing]
- # [continousIntegration Integración contínua]
- # [generatingSite Creación de la web de proyecto]
- # [standaloneArchetype Standalone Archetype]
-
-
-
-   
-      
+      # [ciclo Utilizar Strings de grandes dimensiones en vez de Streams]
+      # [ciclo Codificación de caracteres por defecto (sin ser consciente de ello)]
+      # [ciclo Mala aplicación del MVC (Ej: JSP con lógica de negocio)]
+  # [antipatterns AntiPatrones]
+      # [ciclo Replicar cadenas en vez de utilizar constantes]
+      # [ciclo Clases utilidad]
+      # [ciclo Clases con Tablas de constantes]
+  # [recommendations Recomendaciones]
+      # [ciclo Guías de estilo]
+      # [ciclo Sistemas de trazas] 
+      # [ciclo Internacionalización]
+      # [ciclo Acceso a recursos]
+      # [ciclo Optimizaciones]
+      # [ciclo  Ciclo de vida de un proyecto software]
+ # [ciclo Patrones de diseño]
+ # [ciclo Herramientas]
+   # [ciclo Entornos de desarrollo] 
+    # [ciclo  Depuración local/remota]
+    # [ciclo Sistemas de control de versiones]
+   # [ciclo Maven]
+   # [ciclo Integration contínua]
+   # [ciclo Pruebas unitarias (Test Development Driven)] 
+    # [ciclo Junit]
+    # [ciclo DBUnit]
+    # [ciclo HttpUnit] 
+   # [ciclo Pruebas de carga] 
+    # [ciclo JMeter]
+    # [ciclo Depuración de memoria]
+ # [ciclo Documentación]
+   # [curso http://www.learningtree.com/courses/516.htm]
+   # [curso http://www.javapractices.com]
