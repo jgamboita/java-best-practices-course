@@ -59,15 +59,17 @@ for (final String element : elements) {
 // The tokens object will be destroyed when the loop ends
 }}}
 
-Un objeto puede tener referencias a objetos que hacen uso de recursos de red (como un socket), un fichero, etc. En algunos casos es necesario definir métodos para la liberación de los recursos que usa un objeto (típicamente por usar atributos estáticos). En estos casos es importante asegurarse de invocar esos métodos cuando el objeto ya no sea necesario:
+Un objeto puede tener referencias a objetos que hacen uso de recursos de red (como un socket), un fichero, etc. En algunos casos es necesario definir métodos para la liberación de los recursos que usa un objeto (típicamente por usar atributos estáticos). En estos casos es importante asegurarse de invocar esos métodos cuando el objeto ya no sea necesario. Por ejemplo, un servlet que hace uso de una instancia del HttpClient y de la librería EHCache:
 
 {{{
-	public void contextDestroyed(final ServletContextEvent servletContextEvent) {
+public void contextDestroyed(final ServletContextEvent servletContextEvent) {
 
-		// Shutdown the connection manager of the HTTP client
-		((MultiThreadedHttpConnectionManager) httpClient.getHttpConnectionManager()).shutdown();
+    // Shutdown the connection manager of the HTTP client
+    ((MultiThreadedHttpConnectionManager) httpClient.getHttpConnectionManager()).shutdown();
 
-		// Shutdown the cache manager
-		CacheManager.getInstance().shutdown();
-	}
+    // Shutdown the cache manager
+    CacheManager.getInstance().shutdown();
+}
 }}}
+
+Depender del método `finalize` de un objeto para la liberación de recursos está desaconsejado, ya que no se puede garantizar siempre su invocación por el recolector de basura (puede haber algún ciclo de referencias al objeto que impida su liberación).
