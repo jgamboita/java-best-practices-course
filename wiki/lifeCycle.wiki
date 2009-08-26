@@ -30,3 +30,44 @@ Los atributos estáticos pueden ser potencialmente fuentes de pérdidas de memor
 
  * Una lista o tabla que vaya creciendo de forma incontrolada.
  * Referencias a objetos que ya no son necesarios (no podrán ser liberados por el recolector de basura).
+
+= El ciclo de vida de un objeto =
+
+Un objeto es una instancia de una clase, y cobra vida al ser declarado en un fragmento de código:
+
+{{{
+private Long total = 0L;
+}}}
+
+O al invocar el operador new:
+
+{{{
+StringBuilder sb = new StringBuilder();
+}}}
+
+Los atributos de una clase serán inicializados al instanciar la clase (ya sea por que se hayan definido valores por defecto en su declaración o porque se asignen en el constructor). Estos atributos pueden ser tipos básicos u objetos (recordar que un array es un objeto un tanto especial).
+
+Un objeto sigue vivo en la máquina virtual mientras siga habiendo referencias desde otros objetos (o clases) actualmente en uso. Los objetos declarados en un ámbito, serán destruidos al salir de éste si no se guarda ninguna referencia a ellos en otro objeto:
+
+{{{
+for (final String element : elements) {
+
+    final String tokens[] = element.split("#");
+    // Do something with the elements of the tokens array
+}
+
+// The tokens object will be destroyed when the loop ends
+}}}
+
+Un objeto puede tener referencias a objetos que hacen uso de recursos de red (como un socket), un fichero, etc. En algunos casos es necesario definir métodos para la liberación de los recursos que usa un objeto (típicamente por usar atributos estáticos). En estos casos es importante asegurarse de invocar esos métodos cuando el objeto ya no sea necesario:
+
+{{{
+	public void contextDestroyed(final ServletContextEvent servletContextEvent) {
+
+		// Shutdown the connection manager of the HTTP client
+		((MultiThreadedHttpConnectionManager) httpClient.getHttpConnectionManager()).shutdown();
+
+		// Shutdown the cache manager
+		CacheManager.getInstance().shutdown();
+	}
+}}}
