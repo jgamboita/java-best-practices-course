@@ -59,7 +59,7 @@ for (final String element : elements) {
 // The tokens object will be destroyed when the loop ends
 }}}
 
-Un objeto puede tener referencias a objetos que hacen uso de recursos de red (como un socket), un fichero, etc. En algunos casos es necesario definir métodos para la liberación de los recursos que usa un objeto (típicamente por usar atributos estáticos). En estos casos es importante asegurarse de invocar esos métodos cuando el objeto ya no sea necesario. Por ejemplo, un servlet que hace uso de una instancia de la clase [HttpClient http://hc.apache.org/httpclient-3.x/apidocs/org/apache/commons/httpclient/MultiThreadedHttpConnectionManager.html#shutdown()] y de la librería [EHCache http://ehcache.org/documentation/shutdown.html]:
+Un objeto puede tener referencias a objetos que hacen uso de recursos de red (como un socket), un fichero, etc. En algunos casos es necesario definir métodos para la liberación de los recursos que usa un objeto (típicamente por usar atributos estáticos). En estos casos es importante asegurarse de invocar esos métodos cuando el objeto ya no sea necesario. Por ejemplo, un servlet que hace uso de una instancia de la clase [http://hc.apache.org/httpclient-3.x/apidocs/org/apache/commons/httpclient/MultiThreadedHttpConnectionManager.html#shutdown() HttpClient] y de la librería [http://ehcache.org/documentation/shutdown.html EHCache]:
 
 {{{
 public void contextDestroyed(final ServletContextEvent servletContextEvent) {
