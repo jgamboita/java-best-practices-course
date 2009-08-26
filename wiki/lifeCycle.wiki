@@ -20,7 +20,7 @@ Una vez que se carga una clase, se inicializan sus atributos estáticos y se eje
 {{{
 static {
 
-    // Code executed after class is laoded
+    // Code executed after class is loaded
 }
 }}}
 
