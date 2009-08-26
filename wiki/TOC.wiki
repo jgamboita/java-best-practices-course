@@ -1,12 +1,12 @@
  # [Introduccion Introducción]
    # [introduccionAMaven Errores comunes]
       # [ciclo Mal uso de la POO]
-      # [ciclo Ciclo de vida de un proyecto java]
+      # [ciclo Métodos equals y hashCode]
       # [ciclo Concurrencia (Ej: Campos de un servlet)]
       # [ciclo No reutilizar (Ej: Implementación del MVC desde 0)]
       # [ciclo Dejar recursos abiertos]
       # [ciclo Tratamiento incorrecto de excepciones
-      # [ciclo Reimplementar clases que ya están disponibles en el JDK (Calendar, Streams)
+      # [ciclo Reimplementar clases que ya están disponibles en el JDK (Calendar, Streams)]
       # [ciclo Utilizar Strings de grandes dimensiones en vez de Streams]
       # [ciclo Codificación de caracteres por defecto (sin ser consciente de ello)]
       # [ciclo Mala aplicación del MVC (Ej: JSP con lógica de negocio)]
