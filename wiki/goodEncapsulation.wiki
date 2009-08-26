@@ -51,7 +51,6 @@ public class Person {
         final Person mike = new Person();
 
         final List<Person> joesFriends = joe.getFriends();
-        final List<Person> joesEnemies = joe.getEnemies();
         joesFriends.add(mike); // Throws UnsupportedOperationException
         joe.addFriend(mike);
         joe.addEnemy(mike); // Throws IllegalStateException
