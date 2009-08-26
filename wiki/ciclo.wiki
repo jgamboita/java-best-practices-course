@@ -4,8 +4,10 @@
 
 Muchos de los errores comunes que se producen en la programación en Java vienen por un mal uso de la Programación Orientada a Objetos. Entre ellos podemos destacar:
 
-  * Falta total de orientación a objetos y uso de enfoque procedural: posiblemente desencadena en la falta de encapsulación y alto acoplamiento. Pocas clases con métodos muy largos.
+ * Falta total de orientación a objetos y uso de enfoque procedural: posiblemente desencadena en la falta de encapsulación y alto acoplamiento. Pocas clases con métodos muy largos.
 
-  * Mala aplicación del encapsulamiento: una clase debería ser la única responsable del acceso a sus métodos y atributos. Una mala encapsulación puede permitir un mal uso de la clase y producir comportamientos inesperados (importante sobre todo cuando son clases que se exponen al uso por terceras personas).
+ * Mala aplicación del encapsulamiento: una clase debería ser la única responsable del acceso a sus métodos y atributos. Una mala encapsulación puede permitir un mal uso de la clase y producir comportamientos inesperados (importante sobre todo cuando son clases que se exponen al uso por terceras personas):
+  * [Ejemplo de mala_encapsulación].
+  * [Ejemplo de buena encapsulación].
 
-  * 
+ * Otro
