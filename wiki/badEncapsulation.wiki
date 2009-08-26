@@ -1,3 +1,4 @@
+#summary Ejemplo de mala encapsulación
 {{{
 /*
  * @(#)Person.java
