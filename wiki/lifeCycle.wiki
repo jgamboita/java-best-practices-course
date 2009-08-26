@@ -1,0 +1,32 @@
+#summary Ciclo de vida de un objeto Java
+
+= Introducción =
+
+Es importante ser consciente del ciclo de una instancia de una clase Java, ya sea de una clase que haya sido creada por nosotros o sea una clase desarrollada por terceros. Un desconocimiento del ciclo ciclo de vida puede llevar a comportamientos anómalos como pérdida de memoria, no liberación de recursos (conexiones ficheros) o errores de concurrencia.
+
+= El ciclo de vida de una clase =
+
+Una clase también es un objeto dentro de la máquina virtual, aunque con ciertas peculiaridades:
+
+ * Contiene los bytecodes con el código ejecutable resultante de su compilación.
+ * Contiene las variables estáticas definidas en la clase.
+
+Una clase es cargada por la máquina virtual cuando se ha detectado alguna dependencia con otra clase que la utiliza.
+
+La carga se realiza a través de los cargadores de clases (que están a su vez jerarquizados) y según en el entorno que se esté trabajando, será encontrada por uno u otro cargador. En una aplicación _standalone_ típicamente el cargador de clases `system` será el responsable de la carga. En un servidor de aplicaciones, el cargador de clases puede ser el de la zona web, el común del contenedor o el `system`, según se ubique la clase en el _classpath_.
+
+Una vez que se carga una clase, se inicializan sus atributos estáticos y se ejecuta el código estático que ésta contenga:
+
+{{{
+static {
+
+    // Code executed after class is laoded
+}
+}}}
+
+Una clase (junto con sus atributos estáticos) existirá en la máquina virtual mientras ésta sea referenciada por un cargador de clases. Esto implica que salvo que el cargador de clases permita la recarga de código (como en un contenedor de aplicaciones), la clase y sus atributos permanecerán en memoria hasta la destrucción de la máquina virtual:
+
+Los atributos estáticos pueden ser potencialmente fuentes de pérdidas de memoria si no se usan con cuidado:
+
+ * Una lista o tabla que vaya creciendo de forma incontrolada.
+ * Referencias a objetos que ya no son necesarios (no podrán ser liberados por el recolector de basura).
