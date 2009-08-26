@@ -1,7 +1,5 @@
 #summary Mal uso de la POO.
 
-= La POO y sus errores comunes =
-
 Muchos de los errores comunes que se producen en la programación en Java vienen por un mal uso de la Programación Orientada a Objetos. Entre ellos podemos destacar:
 
  * Falta total de orientación a objetos y uso de enfoque procedural: posiblemente desencadena en la falta de encapsulación y alto acoplamiento. Pocas clases con métodos muy largos.
@@ -13,3 +11,5 @@ Muchos de los errores comunes que se producen en la programación en Java vienen
  * Excesivo uso de herencia que degenera en un código demasiado complejo y difícil de mantener. La herencia ha de usarse cuándo esté justificada y su uso facilite la reutilización de código.
 
  * Diseño incorrecto de las clases, ya sea por falta de granularidad (pocas clases con demasiada funcionalidad) o por exceso (muchas clases con funcionalidad muy reducida).
+
+ * Mal uso del polimorfismo: el excesivo uso de *instanceof* puede ser un indicador de un mal diseño de clases o mal uso de la herencia.
