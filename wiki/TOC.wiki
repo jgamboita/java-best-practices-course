@@ -5,7 +5,7 @@
       # [ciclo Concurrencia (Ej: Campos de un servlet)]
       # [ciclo No reutilizar (Ej: Implementación del MVC desde 0)]
       # [ciclo Dejar recursos abiertos]
-      # [ciclo Tratamiento incorrecto de excepciones
+      # [ciclo Tratamiento incorrecto de excepciones]
       # [ciclo Reimplementar clases que ya están disponibles en el JDK (Calendar, Streams)]
       # [ciclo Utilizar Strings de grandes dimensiones en vez de Streams]
       # [ciclo Codificación de caracteres por defecto (sin ser consciente de ello)]
