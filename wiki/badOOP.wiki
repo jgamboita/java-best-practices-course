@@ -1,4 +1,4 @@
-#summary Mal uso de la POO.
+#summary Mal uso de la POO
 
 Muchos de los errores comunes que se producen en la programación en Java vienen por un mal uso de la Programación Orientada a Objetos. Entre ellos podemos destacar:
 
