@@ -1,6 +1,6 @@
  # [Introduccion Introducción]
-   # [introduccionAMaven Errores comunes]
-      # [ciclo Mal uso de la POO]
+   # Errores comunes
+      # [badOOP Mal uso de la POO]
       # [ciclo Métodos equals y hashCode]
       # [ciclo Concurrencia (Ej: Campos de un servlet)]
       # [ciclo No reutilizar (Ej: Implementación del MVC desde 0)]
