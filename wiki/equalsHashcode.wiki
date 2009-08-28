@@ -14,12 +14,189 @@ De forma un poco más complicada, cuando se estén comparando distintas instanci
 
 Este método permite comparar dos objetos para comparar si son el _mismo_. El concepto de mismo puede ser un poco confuso según la implementeción por defecto en la clase `Object`, ya que lo que hace es comparar las referencias de los objetos, es decir sus direcciones de memoria.
 
-Por ejemplo:
+Por ejemplo, ¿qué resultado daría la ejecución de este fragmento de código si persona.getNombre() devuelve "Pedro"?:
 
 {{{
 
-String a = "Pedro";
 if (persona.getNombre() == "Pedro")
     System.out.println("Hola Pedro!");
+
+}}}
+
+Depende... de cómo se haya creado la cadena con el nombre dentro del objeto `persona`. Si un poco más arriba hacemos:
+
+{{{
+persona.setNombre("Pedro");
+}}}
+
+La igualdad se cumplirá y se mostrará el saludo. Esto se debe a que el objeto `String` son el mismo en ambos casos (una referencia a la tabla de constantes de la clase). Si por el contrario, si el setNombre es invocado con una referencia a una cadena obtenida de la lectura de un fichero, ¡la igualdad no se cumplirá!
+
+El operador `==` compara sólo la referencia en memoria del objeto, no su contenido, por ello siempre en Java usamos:
+
+{{{
+
+if ("Pedro".equals (persona.getNombre()))
+    System.out.println("Hola Pedro!");
+
+}}}
+
+¿Tenemos que reimplementar siempre el método equals? Pues si en nuestro programa se manejan colecciones en las que no sea necesario comparar la igualdad de los atributos de nuestros objetos, no
+
+Por ejemplo: un `Map` cuyas claves sean objetos `String` u otros que ya lleven reimplementado el método equals, como por ejemplo: `Integer`, `Float`, `Date`, etc.
+
+Si la colección llama al método equals sobre nuestros objetos, es necesario reimplementarla:
+
+{{{
+
+/*
+ * @(#)Point.java
+ *
+ * Copyright 2009 Telefónica I+D.
+ */
+package es.tid.bestpractices.equalshashcode.bad1;
+
+import java.util.HashSet;
+import java.util.Set;
+
+public class Point {
+
+    private int x;
+    private int y;
+
+    public Point(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(final int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(final int y) {
+        this.y = y;
+    }
+
+    @Override
+    public String toString() {
+
+        final StringBuilder sb = new StringBuilder();
+        sb.append(" Point = {");
+        sb.append(super.toString());
+        sb.append(", x = ").append(x);
+        sb.append(", y = ").append(y);
+        sb.append('}');
+        return sb.toString();
+    }
+
+    public static void main(String[] args) {
+
+        final Point p1 = new Point(10, 20);
+        final Point p2 = new Point(60, 30);
+        final Point p3 = new Point(10, 20);
+
+        final Set<Point> points = new HashSet();
+        points.add(p1);
+        points.add(p2);
+        points.add(p3);
+
+        System.out.println(points);
+    }
+}
+
+}}}
+
+En este fragmento de código se define la clase punto y se crean tres instancias: p1, p2 y p3. Obsérvese que p1 y p3 tienen las mismas coordenadas y conceptualmente son el mismo punto. Si utilizamos un `Set` para almacenar los puntos diferentes eliminando los duplicados, el código no se comportará como cabría esperar ya que los tres puntos formarían parte del `Set` a pesar de que dos de ellos están repetidos:
+
+{{{
+
+[ Point = {es.tid.bestpractices.equalshashcode.bad1.Point@addbf1, x = 10, y = 20},  Point = {es.tid.bestpractices.equalshashcode.bad1.Point@19821f, x = 60, y = 30},  Point = {es.tid.bestpractices.equalshashcode.bad1.Point@3e25a5, x = 10, y = 20}]
+
+}}}
+
+Esto es debido a que se están comparando sus referencias (addbf1, 19821f y 3e25a5), no sus valores. Ahora bien, si reimplementamos el método equals, es *OBLIGATORIO* reimplementar el método hashCode, ya que de lo contrario la colección (que hacen uso de esta función), funcionarán de forma incorrecta:
+
+{{{
+
+/*
+ * @(#)Point.java
+ *
+ * Copyright 2009 Telefónica I+D.
+ */
+package es.tid.bestpractices.equalshashcode.bad2;
+
+import java.util.HashSet;
+import java.util.Set;
+
+public class Point {
+
+    private int x;
+    private int y;
+
+    public Point(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(final int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(final int y) {
+        this.y = y;
+    }
+
+    @Override
+    public boolean equals(final Object object) {
+
+        if (this == object) return true;
+        if (!(object instanceof Point)) return false;
+        final Point point = (Point) object;
+        return (this.x == point.x) && (this.y == point.y);
+    }
+
+    @Override
+    public String toString() {
+
+        final StringBuilder sb = new StringBuilder();
+        sb.append(" Point = {");
+        sb.append(super.toString());
+        sb.append(", x = ").append(x);
+        sb.append(", y = ").append(y);
+        sb.append('}');
+        return sb.toString();
+    }
+
+    public static void main(String[] args) {
+
+        final Point p1 = new Point(10, 20);
+        final Point p2 = new Point(60, 30);
+        final Point p3 = new Point(10, 20);
+
+        final Set<Point> points = new HashSet();
+        points.add(p1);
+        points.add(p2);
+        points.add(p3);
+
+        System.out.println(points);
+        System.out.println(p1.hashCode());
+        System.out.println(p2.hashCode());
+    }
+}
 
 }}}
