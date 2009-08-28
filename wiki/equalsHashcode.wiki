@@ -1,0 +1,5 @@
+#summary Equals y hascode
+
+= Introducción =
+
+Es importante ser consciente del ciclo de una instancia de una clase Java, ya sea de una clase que haya sido creada por nosotros o sea una clase desarrollada por terceros. Un desconocimiento del ciclo ciclo de vida puede llevar a comportamientos anómalos como pérdida de memoria, no liberación de recursos (conexiones ficheros) o errores de concurrencia.
