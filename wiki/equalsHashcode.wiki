@@ -1,5 +1,25 @@
-#summary Equals y hascode
+#summary Métodos equals y hashCode
 
 = Introducción =
 
-Es importante ser consciente del ciclo de una instancia de una clase Java, ya sea de una clase que haya sido creada por nosotros o sea una clase desarrollada por terceros. Un desconocimiento del ciclo ciclo de vida puede llevar a comportamientos anómalos como pérdida de memoria, no liberación de recursos (conexiones ficheros) o errores de concurrencia.
+Un fallo muy habitual es la creación de clases java que no reimplementan los métodos equals y hashCode de `Object` cuando realmente es necesario hacerlo.
+
+¿Cuándo es necesario reimplementar estos métodos?
+
+De forma sencilla, cuando usemos instancias de esas clases dentro de alguna colección.
+
+De forma un poco más complicada, cuando se estén comparando distintas instancias de una misma clase, con los mismos valores para sus atributos y necesitemos que estos dos objetos se vean como uno mismo.
+
+= Método equals =
+
+Este método permite comparar dos objetos para comparar si son el _mismo_. El concepto de mismo puede ser un poco confuso según la implementeción por defecto en la clase `Object`, ya que lo que hace es comparar las referencias de los objetos, es decir sus direcciones de memoria.
+
+Por ejemplo:
+
+{{{
+
+String a = "Pedro";
+if (persona.getNombre() == "Pedro")
+    System.out.println("Hola Pedro!");
+
+}}}
