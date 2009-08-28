@@ -197,7 +197,7 @@ public class Point {
 
         System.out.println(points);
         System.out.println(p1.hashCode());
-        System.out.println(p2.hashCode());
+        System.out.println(p3.hashCode());
     }
 }
 
@@ -207,11 +207,108 @@ A pesar de que los dos puntos son iguales utilizando el método equals para comp
 
 {{{
 
-[ Point = {es.tid.bestpractices.equalshashcode.bad2.Point@addbf1, x = 60, y = 30},
-  Point = {es.tid.bestpractices.equalshashcode.bad2.Point@42e816, x = 10, y = 20},
-  Point = {es.tid.bestpractices.equalshashcode.bad2.Point@19821f, x = 10, y = 20}]
+[Point = {es.tid.bestpractices.equalshashcode.bad2.Point@addbf1, x = 10, y = 20},
+ Point = {es.tid.bestpractices.equalshashcode.bad2.Point@19821f, x = 60, y = 30},
+ Point = {es.tid.bestpractices.equalshashcode.bad2.Point@3e25a5, x = 10, y = 20}]
 
-1671711
+4072869
 11394033
+
+}}}
+
+Los dos últimos números son las funciones _hash_ o de dispersión que usa la estructura de datos `Set` para mapear los objetos dentro del array que tiene internamente (que irá creciendo dinámicamente según sea necesario). La función de dispersión permite localizar de forma rápida un elemento dentro del array sin tener que recorrerlo entero. Típicamente se utiliza la expresión `hash % size` para asignar una posición dentro del array.
+
+Como los dos valores _hash_ son diferentes aunque los objetos sean iguales, tendrán asignadas posiciones diferentes en el array del `Set` y cuando se vaya a comprobar si el punto que representa p3 existe ya, irá a otra posición diferente del array de la que se encuentra p1 y por tanto no se detectará que está ya repetido.
+
+Si reimplementamos también la función hashCode, el código se comportará de la manera esperada:
+
+{{{
+
+/*
+ * @(#)Point.java
+ *
+ * Copyright 2009 Telefónica I+D.
+ */
+package es.tid.bestpractices.equalshashcode.good;
+
+import java.util.HashSet;
+import java.util.Set;
+
+public class Point {
+
+    private int x;
+    private int y;
+
+    public Point(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(final int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(final int y) {
+        this.y = y;
+    }
+
+    @Override
+    public boolean equals(final Object object) {
+
+        if (this == object) return true;
+        if (!(object instanceof Point)) return false;
+        final Point point = (Point) object;
+        return (this.x == point.x) && (this.y == point.y);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return x * 31 + y;
+    }
+
+    @Override
+    public String toString() {
+
+        final StringBuilder sb = new StringBuilder();
+        sb.append("Point = {");
+        sb.append(super.toString());
+        sb.append(", x = ").append(x);
+        sb.append(", y = ").append(y);
+        sb.append('}');
+        return sb.toString();
+    }
+
+    public static void main(String[] args) {
+
+        final Point p1 = new Point(10, 20);
+        final Point p2 = new Point(60, 30);
+        final Point p3 = new Point(10, 20);
+
+        final Set<Point> points = new HashSet();
+        points.add(p1);
+        points.add(p2);
+        points.add(p3);
+
+        System.out.println(points);
+    }
+}
+
+}}}
+
+Siendo su salida en pantalla:
+
+{{{
+
+[Point = {es.tid.bestpractices.equalshashcode.good.Point@762, x = 60, y = 30},
+ Point = {es.tid.bestpractices.equalshashcode.good.Point@14a, x = 10, y = 20}]
 
 }}}
