@@ -1,0 +1,73 @@
+# Introducción #
+
+Es importante ser consciente del ciclo de una instancia de una clase Java, ya sea de una clase que haya sido creada por nosotros o sea una clase desarrollada por terceros. Un desconocimiento del ciclo ciclo de vida puede llevar a comportamientos anómalos como pérdida de memoria, no liberación de recursos (conexiones ficheros) o errores de concurrencia.
+
+# El ciclo de vida de una clase #
+
+Una clase también es un objeto dentro de la máquina virtual, aunque con ciertas peculiaridades:
+
+  * Contiene los bytecodes con el código ejecutable resultante de su compilación.
+  * Contiene las variables estáticas definidas en la clase.
+
+Una clase es cargada por la máquina virtual cuando se ha detectado alguna dependencia con otra clase que la utiliza.
+
+La carga se realiza a través de los cargadores de clases (que están a su vez jerarquizados) y según en el entorno que se esté trabajando, será encontrada por uno u otro cargador. En una aplicación _standalone_ típicamente el cargador de clases `system` será el responsable de la carga. En un servidor de aplicaciones, el cargador de clases puede ser el de la zona web, el común del contenedor o el `system`, según se ubique la clase en el _classpath_.
+
+Una vez que se carga una clase, se inicializan sus atributos estáticos y se ejecuta el código estático que ésta contenga:
+
+```
+static {
+
+    // Code executed after class is loaded
+}
+```
+
+Una clase (junto con sus atributos estáticos) existirá en la máquina virtual mientras ésta sea referenciada por un cargador de clases. Esto implica que salvo que el cargador de clases permita la recarga de código (como en un contenedor de aplicaciones), la clase y sus atributos permanecerán en memoria hasta la destrucción de la máquina virtual:
+
+Los atributos estáticos pueden ser potencialmente fuentes de pérdidas de memoria si no se usan con cuidado:
+
+  * Una lista o tabla que vaya creciendo de forma incontrolada.
+  * Referencias a objetos que ya no son necesarios (no podrán ser liberados por el recolector de basura).
+
+# El ciclo de vida de un objeto #
+
+Un objeto es una instancia de una clase, y cobra vida al ser declarado en un fragmento de código:
+
+```
+private Long total = 0L;
+```
+
+O al invocar el operador new:
+
+```
+StringBuilder sb = new StringBuilder();
+```
+
+Los atributos de una clase serán inicializados al instanciar la clase (ya sea por que se hayan definido valores por defecto en su declaración o porque se asignen en el constructor). Estos atributos pueden ser tipos básicos u objetos (recordar que un array es un objeto un tanto especial).
+
+Un objeto sigue vivo en la máquina virtual mientras siga habiendo referencias desde otros objetos (o clases) actualmente en uso. Los objetos declarados en un ámbito, serán destruidos al salir de éste si no se guarda ninguna referencia a ellos en otro objeto:
+
+```
+for (final String element : elements) {
+
+    final String tokens[] = element.split("#");
+    // Do something with the elements of the tokens array
+}
+
+// The tokens object will be destroyed when the loop ends
+```
+
+Un objeto puede tener referencias a objetos que hacen uso de recursos de red (como un socket), un fichero, etc. En algunos casos es necesario definir métodos para la liberación de los recursos que usa un objeto (típicamente por usar atributos estáticos). En estos casos es importante asegurarse de invocar esos métodos cuando el objeto ya no sea necesario. Por ejemplo, un servlet que hace uso de una instancia de la clase [HttpClient](http://hc.apache.org/httpclient-3.x/apidocs/org/apache/commons/httpclient/MultiThreadedHttpConnectionManager.html#shutdown()) y de la librería [EHCache](http://ehcache.org/documentation/shutdown.html):
+
+```
+public void contextDestroyed(final ServletContextEvent servletContextEvent) {
+
+    // Shutdown the connection manager of the HTTP client
+    ((MultiThreadedHttpConnectionManager) httpClient.getHttpConnectionManager()).shutdown();
+
+    // Shutdown the cache manager
+    CacheManager.getInstance().shutdown();
+}
+```
+
+Depender del método `finalize` de un objeto para la liberación de recursos está desaconsejado, ya que no se puede garantizar siempre su invocación por el recolector de basura (puede haber algún ciclo de referencias al objeto que impida su liberación).
